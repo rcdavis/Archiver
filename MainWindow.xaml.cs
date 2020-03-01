@@ -36,10 +36,11 @@ namespace Archiver
 
             if (dialog.ShowDialog().GetValueOrDefault(false))
             {
-                if (dialog.FileName.EndsWith(".pak"))
+                IArchiveExporter archiveExporter = GetArchiveExporter(dialog.FileName);
+
+                if (archiveExporter != null)
                 {
                     using Stream stream = File.Create(dialog.FileName);
-                    IArchiveExporter archiveExporter = new PAKArchiveExporter();
                     archiveExporter.Export(archiveProject, stream);
                 }
             }
@@ -89,16 +90,20 @@ namespace Archiver
 
         private void AddFolder_Click(object sender, RoutedEventArgs e)
         {
-            TreeViewItem selectedItem = root;
-            if (treeView.SelectedItem != null)
-                selectedItem = treeView.SelectedItem as TreeViewItem;
-
-            TreeViewItem item = new TreeViewItem()
+            AddTreeFolderDialog dialog = new AddTreeFolderDialog();
+            if (dialog.ShowDialog().GetValueOrDefault(false))
             {
-                Header = "Folder"
-            };
-            selectedItem.Items.Add(item);
-            selectedItem.IsExpanded = true;
+                TreeViewItem selectedItem = root;
+                if (treeView.SelectedItem != null)
+                    selectedItem = treeView.SelectedItem as TreeViewItem;
+
+                TreeViewItem item = new TreeViewItem()
+                {
+                    Header = dialog.FolderName
+                };
+                selectedItem.Items.Add(item);
+                selectedItem.IsExpanded = true;
+            }
         }
 
         private void RecursiveRemoveNode(TreeViewItem root, TreeViewItem itemToRemove)
@@ -109,12 +114,34 @@ namespace Archiver
             }
             else
             {
-                if (!root.Items.IsEmpty)
+                foreach(TreeViewItem item in root.Items)
                 {
-                    foreach(TreeViewItem item in root.Items)
-                    {
-                        RecursiveRemoveNode(item, itemToRemove);
-                    }
+                    RecursiveRemoveNode(item, itemToRemove);
+                }
+            }
+        }
+
+        private IArchiveExporter GetArchiveExporter(string fileName)
+        {
+            if (fileName.EndsWith(".pak"))
+                return new PAKArchiveExporter();
+
+            return null;
+        }
+
+        private void TreeViewItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (treeView.SelectedItem != null && treeView.SelectedItem != root)
+            {
+                TreeViewItem item = treeView.SelectedItem as TreeViewItem;
+                AddTreeFolderDialog dialog = new AddTreeFolderDialog
+                {
+                    FolderName = item.Header.ToString()
+                };
+
+                if (dialog.ShowDialog().GetValueOrDefault(false))
+                {
+                    item.Header = dialog.FolderName;
                 }
             }
         }

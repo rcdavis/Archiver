@@ -15,6 +15,11 @@
                     <MenuItem Header="Remove" Click="RemoveNode_Click"/>
                 </ContextMenu>
             </TreeView.ContextMenu>
+            <TreeView.ItemContainerStyle>
+                <Style TargetType="{x:Type TreeViewItem}">
+                    <EventSetter Event="MouseDoubleClick" Handler="TreeViewItem_MouseDoubleClick"/>
+                </Style>
+            </TreeView.ItemContainerStyle>
         </TreeView>
         <StackPanel Orientation="Vertical" HorizontalAlignment="Right" Width="400">
             <Button x:Name="exportBtn" Content="Export" Margin="10" Click="exportBtn_Click" />

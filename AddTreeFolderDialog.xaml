@@ -1,0 +1,17 @@
+﻿<Window x:Class="Archiver.AddTreeFolderDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Archiver"
+        mc:Ignorable="d"
+        Title="Add Tree Folder" Height="150" Width="200">
+    <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+        <Label Content="Folder Name:"/>
+        <TextBox x:Name="nameTB" Text="{Binding FolderName, Mode=TwoWay}" Width="auto" Margin="10 10 10 10"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button x:Name="okBtn" Content="Ok" Width="50" Margin="0 0 20 0" Click="Ok_Click"/>
+            <Button x:Name="cancelBtn" Content="Cancel" Width="50" Click="Cancel_Click"/>
+        </StackPanel>
+    </StackPanel>
+</Window>
