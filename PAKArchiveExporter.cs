@@ -5,8 +5,14 @@ using System.Text;
 
 namespace Archiver
 {
+    /// <summary>
+    /// Exporter for PAK file archives.
+    /// </summary>
     class PAKArchiveExporter : IArchiveExporter
     {
+        /// <summary>
+        /// First Header within a PAK file. Contains signature and directory location.
+        /// </summary>
         class PAKMainHeader
         {
             public const int SIZE_OF = 12;
@@ -48,18 +54,29 @@ namespace Archiver
             }
         }
 
+        /// <summary>
+        /// Header for every file entry within a PAK file.
+        /// </summary>
         class PAKFileHeader
         {
             public const int SIZE_OF = 64;
             public const int FILE_NAME_LENGTH = 64;
 
-            public char[] Name { get; private set; }
+            private char[] name = new char[FILE_NAME_LENGTH];
+
+            public char[] Name
+            {
+                get { return name; }
+                set
+                {
+                    value.CopyTo(name, 0);
+                }
+            }
             public int Offset { get; set; }
             public int Size { get; set; }
 
             public PAKFileHeader()
             {
-                Name = new char[FILE_NAME_LENGTH];
                 Offset = 0;
                 Size = 0;
             }
@@ -81,7 +98,24 @@ namespace Archiver
 
         public void Export(ArchiveProject project, Stream stream)
         {
-            throw new NotImplementedException();
+            BinaryWriter writer = new BinaryWriter(stream);
+
+            PAKMainHeader mainHeader = new PAKMainHeader();
+
+            ICollection<ArchiveProjectEntry> entries = project.GetFiles();
+            ICollection<PAKFileHeader> fileHeaders = new List<PAKFileHeader>();
+
+            foreach(ArchiveProjectEntry entry in entries)
+            {
+                PAKFileHeader header = new PAKFileHeader
+                {
+                    Name = entry.Name.ToCharArray()
+                };
+
+                byte[] contents = File.ReadAllBytes(entry.Url);
+
+                fileHeaders.Add(header);
+            }
         }
 
         public void Import(ArchiveProject project, Stream stream)
