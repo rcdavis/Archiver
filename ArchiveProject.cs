@@ -14,7 +14,7 @@ namespace Archiver
             Root = new ArchiveProjectEntry
             {
                 Name = "Root",
-                Url = ""
+                Path = ""
             };
         }
 

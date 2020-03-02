@@ -20,12 +20,12 @@ namespace Archiver
 
             root = new TreeViewItem()
             {
-                Header = archiveProject.Root.Name
+                Header = archiveProject.Root
             };
             treeView.Items.Add(root);
         }
 
-        private void exportBtn_Click(object sender, RoutedEventArgs e)
+        private void ExportBtn_Click(object sender, RoutedEventArgs e)
         {
             SaveFileDialog dialog = new SaveFileDialog
             {
@@ -46,7 +46,7 @@ namespace Archiver
             }
         }
 
-        private void importBtn_Click(object sender, RoutedEventArgs e)
+        private void ImportBtn_Click(object sender, RoutedEventArgs e)
         {
 
         }
@@ -65,9 +65,17 @@ namespace Archiver
                 if (treeView.SelectedItem != null)
                     selectedItem = treeView.SelectedItem as TreeViewItem;
 
+                ArchiveProjectEntry entry = new ArchiveProjectEntry
+                {
+                    Name = dialog.SafeFileName,
+                    Path = dialog.FileName,
+                    IsFile = true
+                };
+                ((ArchiveProjectEntry)selectedItem.Header).AddChild(entry);
+
                 TreeViewItem item = new TreeViewItem()
                 {
-                    Header = dialog.SafeFileName
+                    Header = entry
                 };
                 selectedItem.Items.Add(item);
                 selectedItem.IsExpanded = true;
@@ -79,6 +87,17 @@ namespace Archiver
             if (treeView.SelectedItem != null)
             {
                 TreeViewItem selectedItem = treeView.SelectedItem as TreeViewItem;
+                ArchiveProjectEntry entry = selectedItem.Header as ArchiveProjectEntry;
+
+                if (entry.Parent != null)
+                {
+                    entry.Parent.RemoveChild(entry);
+                }
+                else
+                {
+                    archiveProject.Root.RemoveChild(entry);
+                }
+
                 selectedItem.Items.Clear();
 
                 if (selectedItem != root)
@@ -97,9 +116,15 @@ namespace Archiver
                 if (treeView.SelectedItem != null)
                     selectedItem = treeView.SelectedItem as TreeViewItem;
 
+                ArchiveProjectEntry entry = new ArchiveProjectEntry
+                {
+                    Name = dialog.FolderName
+                };
+                ((ArchiveProjectEntry)selectedItem.Header).AddChild(entry);
+
                 TreeViewItem item = new TreeViewItem()
                 {
-                    Header = dialog.FolderName
+                    Header = entry
                 };
                 selectedItem.Items.Add(item);
                 selectedItem.IsExpanded = true;
@@ -141,7 +166,12 @@ namespace Archiver
 
                 if (dialog.ShowDialog().GetValueOrDefault(false))
                 {
-                    item.Header = dialog.FolderName;
+                    ArchiveProjectEntry entry = item.Header as ArchiveProjectEntry;
+                    entry.Name = dialog.FolderName;
+                    // HACK: Must force the Header to change in order for the text to
+                    // display correctly in the TreeView.
+                    item.Header = null;
+                    item.Header = entry;
                 }
             }
         }

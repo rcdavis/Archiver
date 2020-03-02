@@ -112,7 +112,7 @@ namespace Archiver
                     Name = entry.Name.ToCharArray()
                 };
 
-                byte[] contents = File.ReadAllBytes(entry.Url);
+                byte[] contents = File.ReadAllBytes(entry.Path);
 
                 fileHeaders.Add(header);
             }

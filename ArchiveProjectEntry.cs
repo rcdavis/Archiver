@@ -8,7 +8,7 @@ namespace Archiver
     class ArchiveProjectEntry
     {
         public string Name { get; set; }
-        public string Url { get; set; }
+        public string Path { get; set; }
         public bool IsFile { get; set; }
         public ArchiveProjectEntry Parent { get; set; }
         public ICollection<ArchiveProjectEntry> Children { get; private set; }
@@ -22,7 +22,6 @@ namespace Archiver
         public void AddChild(ArchiveProjectEntry entry)
         {
             entry.Parent = this;
-            entry.Url = Url + entry.Url;
             Children.Add(entry);
         }
 
@@ -32,8 +31,12 @@ namespace Archiver
             {
                 Children.Remove(entry);
                 entry.Parent = null;
-                entry.Url = entry.Name;
             }
+        }
+
+        public override string ToString()
+        {
+            return Name;
         }
     }
 }

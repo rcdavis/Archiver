@@ -22,8 +22,8 @@
             </TreeView.ItemContainerStyle>
         </TreeView>
         <StackPanel Orientation="Vertical" HorizontalAlignment="Right" Width="400">
-            <Button x:Name="exportBtn" Content="Export" Margin="10" Click="exportBtn_Click" />
-            <Button x:Name="importBtn" Content="Import" Margin="10" Click="importBtn_Click" />
+            <Button x:Name="exportBtn" Content="Export" Margin="10 10 10 0" Click="ExportBtn_Click" />
+            <Button x:Name="importBtn" Content="Import" Margin="10 10 10 0" Click="ImportBtn_Click" />
         </StackPanel>
     </Grid>
 </Window>
