@@ -12,7 +12,7 @@ namespace Archiver
         public AddTreeFolderDialog()
         {
             InitializeComponent();
-            this.DataContext = this;
+            DataContext = this;
 
             FolderName = "Folder";
         }
