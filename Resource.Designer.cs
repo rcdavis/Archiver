@@ -79,6 +79,15 @@ namespace Archiver {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to File To Add To Archive.
+        /// </summary>
+        public static string add_node_dialog_title {
+            get {
+                return ResourceManager.GetString("add_node_dialog_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Archiver.
         /// </summary>
         public static string archiver {
@@ -93,6 +102,15 @@ namespace Archiver {
         public static string export {
             get {
                 return ResourceManager.GetString("export", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export Archive.
+        /// </summary>
+        public static string export_dialog_title {
+            get {
+                return ResourceManager.GetString("export_dialog_title", resourceCulture);
             }
         }
         
@@ -115,11 +133,29 @@ namespace Archiver {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Import Archive.
+        /// </summary>
+        public static string import_dialog_title {
+            get {
+                return ResourceManager.GetString("import_dialog_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Open.
         /// </summary>
         public static string open {
             get {
                 return ResourceManager.GetString("open", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open Archive Project.
+        /// </summary>
+        public static string open_project_dialog_title {
+            get {
+                return ResourceManager.GetString("open_project_dialog_title", resourceCulture);
             }
         }
         
@@ -138,6 +174,15 @@ namespace Archiver {
         public static string save {
             get {
                 return ResourceManager.GetString("save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save Archive Project.
+        /// </summary>
+        public static string save_project_dialog_title {
+            get {
+                return ResourceManager.GetString("save_project_dialog_title", resourceCulture);
             }
         }
     }
