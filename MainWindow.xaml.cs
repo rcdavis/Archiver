@@ -13,7 +13,7 @@ namespace Archiver
     public partial class MainWindow : Window
     {
         private ArchiveProject archiveProject = new ArchiveProject();
-        private readonly TreeViewItem root;
+        private TreeViewItem root;
 
         public MainWindow()
         {
@@ -210,7 +210,7 @@ namespace Archiver
                 using FileStream stream = File.OpenRead(dialog.FileName);
                 XmlSerializer serializer = new XmlSerializer(typeof(ArchiveProject));
                 archiveProject = (ArchiveProject)serializer.Deserialize(stream);
-                treeView.InvalidateVisual();
+                SetupTreeView(archiveProject);
             }
         }
 
@@ -228,6 +228,35 @@ namespace Archiver
                 using FileStream stream = File.OpenWrite(dialog.FileName);
                 XmlSerializer serializer = new XmlSerializer(typeof(ArchiveProject));
                 serializer.Serialize(stream, archiveProject);
+            }
+        }
+
+        private void SetupTreeView(ArchiveProject project)
+        {
+            treeView.Items.Clear();
+            root = new TreeViewItem()
+            {
+                Header = project.Root
+            };
+            treeView.Items.Add(root);
+
+            foreach (ArchiveProjectEntry child in project.Root.Children)
+            {
+                AddTreeNode(root, child);
+            }
+        }
+
+        private void AddTreeNode(TreeViewItem parent, ArchiveProjectEntry entry)
+        {
+            TreeViewItem node = new TreeViewItem()
+            {
+                Header = entry
+            };
+            parent.Items.Add(node);
+
+            foreach(ArchiveProjectEntry child in entry.Children)
+            {
+                AddTreeNode(node, child);
             }
         }
     }
