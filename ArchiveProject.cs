@@ -5,16 +5,15 @@ namespace Archiver
     /// <summary>
     /// Represents a tree structure for archives.
     /// </summary>
-    class ArchiveProject
+    public class ArchiveProject
     {
-        public ArchiveProjectEntry Root { get; private set; }
+        public ArchiveProjectEntry Root { get; set; }
 
         public ArchiveProject()
         {
             Root = new ArchiveProjectEntry
             {
-                Name = "Root",
-                Path = ""
+                Name = "Root"
             };
         }
 

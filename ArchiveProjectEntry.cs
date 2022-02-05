@@ -1,17 +1,29 @@
 ﻿using System.Collections.Generic;
+using System.Xml.Serialization;
 
 namespace Archiver
 {
     /// <summary>
-    /// Entry into an archive tree structure.
+    /// Entry in an archive tree structure.
     /// </summary>
-    class ArchiveProjectEntry
+    public class ArchiveProjectEntry
     {
         public string Name { get; set; }
         public string Path { get; set; }
+        public string RelativePath
+        {
+            get
+            {
+                if (Parent != null)
+                    return Parent.RelativePath + "\\" + Name;
+
+                return Name;
+            }
+        }
         public bool IsFile { get; set; }
+        [XmlIgnore]
         public ArchiveProjectEntry Parent { get; set; }
-        public ICollection<ArchiveProjectEntry> Children { get; private set; }
+        public List<ArchiveProjectEntry> Children { get; private set; }
 
         public ArchiveProjectEntry()
         {

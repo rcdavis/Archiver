@@ -101,21 +101,37 @@ namespace Archiver
             BinaryWriter writer = new BinaryWriter(stream);
 
             PAKMainHeader mainHeader = new PAKMainHeader();
+            long startPosition = stream.Position;
+            stream.Seek(PAKMainHeader.SIZE_OF, SeekOrigin.Current);
 
             ICollection<ArchiveProjectEntry> entries = project.GetFiles();
             ICollection<PAKFileHeader> fileHeaders = new List<PAKFileHeader>();
 
             foreach(ArchiveProjectEntry entry in entries)
             {
+                byte[] contents = File.ReadAllBytes(entry.Path);
+
                 PAKFileHeader header = new PAKFileHeader
                 {
-                    Name = entry.Name.ToCharArray()
+                    Name = entry.RelativePath.ToCharArray(),
+                    Offset = mainHeader.DirectoryOffset,
+                    Size = contents.Length
                 };
 
-                byte[] contents = File.ReadAllBytes(entry.Path);
+                writer.Write(contents);
+
+                mainHeader.DirectoryOffset += contents.Length;
+                mainHeader.DirectoryLength += PAKFileHeader.SIZE_OF;
 
                 fileHeaders.Add(header);
             }
+
+            foreach(PAKFileHeader header in fileHeaders)
+                header.Write(writer);
+
+            stream.Position = startPosition;
+            mainHeader.Write(writer);
+            stream.Position = startPosition + mainHeader.DirectoryOffset + mainHeader.DirectoryLength;
         }
 
         public void Import(ArchiveProject project, Stream stream)

@@ -3,6 +3,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Xml.Serialization;
 
 namespace Archiver
 {
@@ -11,7 +12,7 @@ namespace Archiver
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly ArchiveProject archiveProject = new ArchiveProject();
+        private ArchiveProject archiveProject = new ArchiveProject();
         private readonly TreeViewItem root;
 
         public MainWindow()
@@ -29,9 +30,9 @@ namespace Archiver
         {
             SaveFileDialog dialog = new SaveFileDialog
             {
-                Title = "Export Archive",
+                Title = Resource.export_dialog_title,
                 Filter = "PAK files (*.pak)|*.pak",
-                DefaultExt = ".pak"
+                DefaultExt = "pak"
             };
 
             if (dialog.ShowDialog().GetValueOrDefault(false))
@@ -40,7 +41,7 @@ namespace Archiver
 
                 if (archiveExporter != null)
                 {
-                    using Stream stream = File.Create(dialog.FileName);
+                    using FileStream stream = File.Create(dialog.FileName);
                     archiveExporter.Export(archiveProject, stream);
                 }
             }
@@ -48,19 +49,39 @@ namespace Archiver
 
         private void ImportBtn_Click(object sender, RoutedEventArgs e)
         {
+            OpenFileDialog dialog = new OpenFileDialog
+            {
+                Title = Resource.import_dialog_title,
+                Filter = "PAK files (*.pak)|*.pak"
+            };
 
+            if (dialog.ShowDialog().GetValueOrDefault(false))
+            {
+                IArchiveExporter archiveExporter = GetArchiveExporter(dialog.FileName);
+
+                if (archiveExporter != null)
+                {
+                    using FileStream stream = File.OpenRead(dialog.FileName);
+                    archiveExporter.Import(archiveProject, stream);
+                }
+            }
         }
 
         private void AddNode_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog dialog = new OpenFileDialog
             {
-                Title = "File To Add To Archive",
+                Title = Resource.add_node_dialog_title,
                 Filter = "All files (*.*)|*.*"
             };
 
             if (dialog.ShowDialog().GetValueOrDefault(false))
             {
+                if (Directory.Exists(dialog.FileName))
+                {
+                    System.Console.WriteLine(string.Format("{0} is a directory and not a file.", dialog.FileName));
+                    return;
+                }
                 TreeViewItem selectedItem = root;
                 if (treeView.SelectedItem != null)
                     selectedItem = treeView.SelectedItem as TreeViewItem;
@@ -173,6 +194,40 @@ namespace Archiver
                     item.Header = null;
                     item.Header = entry;
                 }
+            }
+        }
+
+        private void OpenProjectCmd(object sender, ExecutedRoutedEventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog
+            {
+                Title = Resource.open_project_dialog_title,
+                Filter = "Archive Project (*.arproj)|*.arproj"
+            };
+
+            if (dialog.ShowDialog().GetValueOrDefault(false))
+            {
+                using FileStream stream = File.OpenRead(dialog.FileName);
+                XmlSerializer serializer = new XmlSerializer(typeof(ArchiveProject));
+                archiveProject = (ArchiveProject)serializer.Deserialize(stream);
+                treeView.InvalidateVisual();
+            }
+        }
+
+        private void SaveProjectCmd(object sender, ExecutedRoutedEventArgs e)
+        {
+            SaveFileDialog dialog = new SaveFileDialog
+            {
+                Title = Resource.save_project_dialog_title,
+                Filter = "Archive Project (*.arproj)|*.arproj",
+                DefaultExt = "arproj"
+            };
+
+            if (dialog.ShowDialog().GetValueOrDefault(false))
+            {
+                using FileStream stream = File.OpenWrite(dialog.FileName);
+                XmlSerializer serializer = new XmlSerializer(typeof(ArchiveProject));
+                serializer.Serialize(stream, archiveProject);
             }
         }
     }
