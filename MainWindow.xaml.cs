@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using System;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,12 +19,7 @@ namespace Archiver
         public MainWindow()
         {
             InitializeComponent();
-
-            root = new TreeViewItem()
-            {
-                Header = archiveProject.Root
-            };
-            treeView.Items.Add(root);
+            SetupTreeView(archiveProject);
         }
 
         private void ExportBtn_Click(object sender, RoutedEventArgs e)
@@ -207,10 +203,17 @@ namespace Archiver
 
             if (dialog.ShowDialog().GetValueOrDefault(false))
             {
-                using FileStream stream = File.OpenRead(dialog.FileName);
-                XmlSerializer serializer = new XmlSerializer(typeof(ArchiveProject));
-                archiveProject = (ArchiveProject)serializer.Deserialize(stream);
-                SetupTreeView(archiveProject);
+                try
+                {
+                    using FileStream stream = File.OpenRead(dialog.FileName);
+                    XmlSerializer serializer = new XmlSerializer(typeof(ArchiveProject));
+                    archiveProject = (ArchiveProject)serializer.Deserialize(stream);
+                    SetupTreeView(archiveProject);
+                }
+                catch (Exception error)
+                {
+                    MessageBox.Show(error.Message);
+                }
             }
         }
 
@@ -225,9 +228,16 @@ namespace Archiver
 
             if (dialog.ShowDialog().GetValueOrDefault(false))
             {
-                using FileStream stream = File.OpenWrite(dialog.FileName);
-                XmlSerializer serializer = new XmlSerializer(typeof(ArchiveProject));
-                serializer.Serialize(stream, archiveProject);
+                try
+                {
+                    using FileStream stream = File.OpenWrite(dialog.FileName);
+                    XmlSerializer serializer = new XmlSerializer(typeof(ArchiveProject));
+                    serializer.Serialize(stream, archiveProject);
+                }
+                catch (Exception error)
+                {
+                    MessageBox.Show(error.Message);
+                }
             }
         }
 
