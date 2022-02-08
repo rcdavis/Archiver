@@ -133,10 +133,5 @@ namespace Archiver
             mainHeader.Write(writer);
             stream.Position = startPosition + mainHeader.DirectoryOffset + mainHeader.DirectoryLength;
         }
-
-        public void Import(ArchiveProject project, Stream stream)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

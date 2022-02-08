@@ -43,26 +43,6 @@ namespace Archiver
             }
         }
 
-        private void ImportBtn_Click(object sender, RoutedEventArgs e)
-        {
-            OpenFileDialog dialog = new OpenFileDialog
-            {
-                Title = Resource.import_dialog_title,
-                Filter = "PAK files (*.pak)|*.pak"
-            };
-
-            if (dialog.ShowDialog().GetValueOrDefault(false))
-            {
-                IArchiveExporter archiveExporter = GetArchiveExporter(dialog.FileName);
-
-                if (archiveExporter != null)
-                {
-                    using FileStream stream = File.OpenRead(dialog.FileName);
-                    archiveExporter.Import(archiveProject, stream);
-                }
-            }
-        }
-
         private void AddNode_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog dialog = new OpenFileDialog

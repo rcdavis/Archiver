@@ -138,12 +138,6 @@
   <data name="file" xml:space="preserve">
     <value>File</value>
   </data>
-  <data name="import" xml:space="preserve">
-    <value>Import</value>
-  </data>
-  <data name="import_dialog_title" xml:space="preserve">
-    <value>Import Archive</value>
-  </data>
   <data name="open" xml:space="preserve">
     <value>Open</value>
   </data>
