@@ -60,7 +60,7 @@ namespace Archiver
         class PAKFileHeader
         {
             public const int SIZE_OF = 64;
-            public const int FILE_NAME_LENGTH = 64;
+            public const int FILE_NAME_LENGTH = 56;
 
             private char[] name = new char[FILE_NAME_LENGTH];
 
@@ -105,7 +105,7 @@ namespace Archiver
             stream.Seek(PAKMainHeader.SIZE_OF, SeekOrigin.Current);
 
             ICollection<ArchiveProjectEntry> entries = project.GetFiles();
-            ICollection<PAKFileHeader> fileHeaders = new List<PAKFileHeader>();
+            List<PAKFileHeader> fileHeaders = new List<PAKFileHeader>();
 
             foreach(ArchiveProjectEntry entry in entries)
             {
@@ -126,8 +126,7 @@ namespace Archiver
                 fileHeaders.Add(header);
             }
 
-            foreach(PAKFileHeader header in fileHeaders)
-                header.Write(writer);
+            fileHeaders.ForEach(header => header.Write(writer));
 
             stream.Position = startPosition;
             mainHeader.Write(writer);

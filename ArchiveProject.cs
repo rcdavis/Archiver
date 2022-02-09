@@ -33,10 +33,7 @@ namespace Archiver
                 entries.Add(curEntry);
             }
 
-            foreach(ArchiveProjectEntry entry in curEntry.Children)
-            {
-                RecursiveFileCapture(entries, entry);
-            }
+            curEntry.Children.ForEach(child => RecursiveFileCapture(entries, child));
         }
     }
 }
