@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Xml.Serialization;
+using System.Globalization;
 
 namespace Archiver
 {
@@ -248,6 +249,30 @@ namespace Archiver
             {
                 AddTreeNode(node, child);
             }
+        }
+
+        private void EnglishUS_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateLanguage(new CultureInfo("en-US"));
+        }
+
+        private void Japanese_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateLanguage(new CultureInfo("ja-JP"));
+        }
+
+        private void UpdateLanguage(CultureInfo culture)
+        {
+            Resource.Culture = culture;
+            Title = Resource.archiver;
+            menuFile.Header = Resource.file;
+            menuOpen.Header = Resource.open;
+            menuSave.Header = Resource.save;
+            menuEdit.Header = Resource.edit;
+            menuLanguage.Header = Resource.language;
+            menuLanguageEnUS.Header = Resource.language_en_us;
+            menuLanguageJP.Header = Resource.language_jp;
+            exportBtn.Content = Resource.export;
         }
     }
 }

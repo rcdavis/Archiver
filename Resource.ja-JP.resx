@@ -118,51 +118,51 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="add_folder" xml:space="preserve">
-    <value>Add Folder</value>
+    <value>フォルダーを追加</value>
   </data>
   <data name="add_node" xml:space="preserve">
-    <value>Add Node</value>
+    <value>ノードの追加</value>
   </data>
   <data name="add_node_dialog_title" xml:space="preserve">
-    <value>File To Add To Archive</value>
+    <value>アーカイブに追加するファイル</value>
   </data>
   <data name="archiver" xml:space="preserve">
-    <value>Archiver</value>
+    <value>アーカイブ</value>
   </data>
   <data name="edit" xml:space="preserve">
-    <value>Edit</value>
+    <value>編集</value>
   </data>
   <data name="export" xml:space="preserve">
-    <value>Export</value>
+    <value>エクスポート</value>
   </data>
   <data name="export_dialog_title" xml:space="preserve">
-    <value>Export Archive</value>
+    <value>アーカイブのエクスポート</value>
   </data>
   <data name="file" xml:space="preserve">
-    <value>File</value>
+    <value>ファイル</value>
   </data>
   <data name="language" xml:space="preserve">
-    <value>Language</value>
+    <value>言語</value>
   </data>
   <data name="language_en_us" xml:space="preserve">
-    <value>English (US)</value>
+    <value>英語（米国）</value>
   </data>
   <data name="language_jp" xml:space="preserve">
-    <value>Japanese</value>
+    <value>日本語</value>
   </data>
   <data name="open" xml:space="preserve">
-    <value>Open</value>
+    <value>開ける</value>
   </data>
   <data name="open_project_dialog_title" xml:space="preserve">
-    <value>Open Archive Project</value>
+    <value>アーカイブプロジェクト開ける</value>
   </data>
   <data name="remove" xml:space="preserve">
-    <value>Remove</value>
+    <value>削除する</value>
   </data>
   <data name="save" xml:space="preserve">
-    <value>Save</value>
+    <value>保存する</value>
   </data>
   <data name="save_project_dialog_title" xml:space="preserve">
-    <value>Save Archive Project</value>
+    <value>アーカイブプロジェクトを保存する</value>
   </data>
 </root>

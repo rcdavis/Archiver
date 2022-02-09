@@ -12,17 +12,23 @@
     </Window.CommandBindings>
     <Grid>
         <Menu IsMainMenu="True">
-            <MenuItem Header="{x:Static local:Resource.file}">
-                <MenuItem Header="{x:Static local:Resource.open}" Command="Open"/>
-                <MenuItem Header="{x:Static local:Resource.save}" Command="Save"/>
+            <MenuItem Name="menuFile" Header="{x:Static local:Resource.file}">
+                <MenuItem Name="menuOpen" Header="{x:Static local:Resource.open}" Command="Open"/>
+                <MenuItem Name="menuSave" Header="{x:Static local:Resource.save}" Command="Save"/>
+            </MenuItem>
+            <MenuItem Name="menuEdit" Header="{x:Static local:Resource.edit}">
+                <MenuItem Name="menuLanguage" Header="{x:Static local:Resource.language}">
+                    <MenuItem Name="menuLanguageEnUS" Header="{x:Static local:Resource.language_en_us}" Click="EnglishUS_Click"/>
+                    <MenuItem Name="menuLanguageJP" Header="{x:Static local:Resource.language_jp}" Click="Japanese_Click"/>
+                </MenuItem>
             </MenuItem>
         </Menu>
         <TreeView x:Name="treeView" HorizontalAlignment="Stretch" Margin="0 20 0 45">
             <TreeView.ContextMenu>
                 <ContextMenu StaysOpen="True">
-                    <MenuItem Header="{x:Static local:Resource.add_folder}" Click="AddFolder_Click"/>
-                    <MenuItem Header="{x:Static local:Resource.add_node}" Click="AddNode_Click"/>
-                    <MenuItem Header="{x:Static local:Resource.remove}" Click="RemoveNode_Click"/>
+                    <MenuItem Name="menuAddFolder" Header="{x:Static local:Resource.add_folder}" Click="AddFolder_Click"/>
+                    <MenuItem Name="menuAddNode" Header="{x:Static local:Resource.add_node}" Click="AddNode_Click"/>
+                    <MenuItem Name="menuRemoveNode" Header="{x:Static local:Resource.remove}" Click="RemoveNode_Click"/>
                 </ContextMenu>
             </TreeView.ContextMenu>
             <TreeView.ItemContainerStyle>

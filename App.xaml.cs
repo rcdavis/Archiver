@@ -13,5 +13,9 @@ namespace Archiver
     /// </summary>
     public partial class App : Application
     {
+        App()
+        {
+            //Resource.Culture = new System.Globalization.CultureInfo("ja-JP");
+        }
     }
 }
