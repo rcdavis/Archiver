@@ -14,7 +14,7 @@ namespace Archiver
         {
             get
             {
-                if (Parent != null)
+                if (Parent != null && Parent.Name != "Root")
                     return Parent.RelativePath + "\\" + Name;
 
                 return Name;
