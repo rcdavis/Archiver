@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
+using System.Windows.Input;
 
 namespace Archiver
 {
@@ -14,7 +16,12 @@ namespace Archiver
             InitializeComponent();
             DataContext = this;
 
-            FolderName = "Folder";
+            Activated += AddTreeFolderDialog_Activated;
+        }
+
+        private void AddTreeFolderDialog_Activated(object sender, EventArgs e)
+        {
+            Keyboard.Focus(nameTB);
         }
 
         private void Ok_Click(object sender, RoutedEventArgs e)

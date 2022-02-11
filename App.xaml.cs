@@ -11,11 +11,5 @@ namespace Archiver
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
-    public partial class App : Application
-    {
-        App()
-        {
-            //Resource.Culture = new System.Globalization.CultureInfo("ja-JP");
-        }
-    }
+    public partial class App : Application {}
 }

@@ -35,5 +35,19 @@ namespace Archiver
 
             curEntry.Children.ForEach(child => RecursiveFileCapture(entries, child));
         }
+
+        public void BuildParents()
+        {
+            BuildParents(Root);
+        }
+
+        private void BuildParents(ArchiveProjectEntry entry)
+        {
+            foreach (var child in entry.Children)
+            {
+                child.Parent = entry;
+                BuildParents(child);
+            }
+        }
     }
 }

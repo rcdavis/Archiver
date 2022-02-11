@@ -56,7 +56,7 @@ namespace Archiver
             {
                 if (Directory.Exists(dialog.FileName))
                 {
-                    System.Console.WriteLine(string.Format("{0} is a directory and not a file.", dialog.FileName));
+                    Console.WriteLine(string.Format("{0} is a directory and not a file.", dialog.FileName));
                     return;
                 }
                 TreeViewItem selectedItem = root;
@@ -112,7 +112,7 @@ namespace Archiver
             {
                 TreeViewItem selectedItem = root;
                 if (treeView.SelectedItem != null)
-                    selectedItem = treeView.SelectedItem as TreeViewItem;
+                    selectedItem = (TreeViewItem)treeView.SelectedItem;
 
                 ArchiveProjectEntry entry = new ArchiveProjectEntry
                 {
@@ -193,7 +193,7 @@ namespace Archiver
                 }
                 catch (Exception error)
                 {
-                    MessageBox.Show(error.Message);
+                    MessageBox.Show(error.Message, "Open Project Error");
                 }
             }
         }
@@ -217,7 +217,7 @@ namespace Archiver
                 }
                 catch (Exception error)
                 {
-                    MessageBox.Show(error.Message);
+                    MessageBox.Show(error.Message, "Save Project Error");
                 }
             }
         }
@@ -231,10 +231,8 @@ namespace Archiver
             };
             treeView.Items.Add(root);
 
-            foreach (ArchiveProjectEntry child in project.Root.Children)
-            {
-                AddTreeNode(root, child);
-            }
+            project.Root.Children.ForEach(child => AddTreeNode(root, child));
+            project.BuildParents();
         }
 
         private void AddTreeNode(TreeViewItem parent, ArchiveProjectEntry entry)
@@ -245,10 +243,7 @@ namespace Archiver
             };
             parent.Items.Add(node);
 
-            foreach(ArchiveProjectEntry child in entry.Children)
-            {
-                AddTreeNode(node, child);
-            }
+            entry.Children.ForEach(child => AddTreeNode(node, child));
         }
 
         private void EnglishUS_Click(object sender, RoutedEventArgs e)

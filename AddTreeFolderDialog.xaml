@@ -8,10 +8,10 @@
         Title="Add Tree Folder" Height="150" Width="200">
     <StackPanel Orientation="Vertical" VerticalAlignment="Center">
         <Label Content="Folder Name:"/>
-        <TextBox x:Name="nameTB" Text="{Binding FolderName, Mode=TwoWay}" Width="auto" Margin="10 10 10 10"/>
+        <TextBox x:Name="nameTB" Text="{Binding FolderName, Mode=TwoWay}" Width="auto" Margin="10 10 10 10" Focusable="True"/>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button x:Name="okBtn" Content="Ok" Width="50" Margin="0 0 20 0" Click="Ok_Click"/>
-            <Button x:Name="cancelBtn" Content="Cancel" Width="50" Click="Cancel_Click"/>
+            <Button x:Name="okBtn" Content="Ok" Width="50" Margin="0 0 20 0" Click="Ok_Click" IsDefault="True"/>
+            <Button x:Name="cancelBtn" Content="Cancel" Width="50" Click="Cancel_Click" IsCancel="True"/>
         </StackPanel>
     </StackPanel>
 </Window>

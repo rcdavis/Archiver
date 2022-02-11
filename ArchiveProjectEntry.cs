@@ -23,6 +23,7 @@ namespace Archiver
         public bool IsFile { get; set; }
         [XmlIgnore]
         public ArchiveProjectEntry Parent { get; set; }
+
         public List<ArchiveProjectEntry> Children { get; private set; }
 
         public ArchiveProjectEntry()
